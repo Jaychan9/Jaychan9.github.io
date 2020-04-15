@@ -4,7 +4,7 @@
 
 <head>
   
-  <title>Hexo</title>
+  <title>基于ElasticSearch的电子商城搜索功能的实现一 - Hexo</title>
   <meta charset="UTF-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
@@ -12,16 +12,29 @@
   
 
   <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="一、学习目标  实现基本的搜索    实现页面分页    实现结果排序     二、具体实现2.1、前端(Vue)添加搜索字段的数据模型：datakey为搜索的关键字   123456789101112&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt;    var vm &#x3D; new Vue(&amp;#123;        el: &quot;#searchApp&quot;,        da">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于ElasticSearch的电子商城搜索功能的实现一">
+<meta property="og:url" content="http://yoursite.com/2020/04/15/%E5%9F%BA%E4%BA%8EElasticSearch%E7%9A%84%E7%94%B5%E5%AD%90%E5%95%86%E5%9F%8E%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%80/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、学习目标  实现基本的搜索    实现页面分页    实现结果排序     二、具体实现2.1、前端(Vue)添加搜索字段的数据模型：datakey为搜索的关键字   123456789101112&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt;    var vm &#x3D; new Vue(&amp;#123;        el: &quot;#searchApp&quot;,        da">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200403215942181.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020040322014233.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200403220232474.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200403220311885.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200403220339666.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200403220609600.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200403220356913.gif">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200403220454721.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-04-15T10:20:37.163Z">
+<meta property="article:modified_time" content="2020-04-15T10:19:51.910Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200403215942181.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/nexmoe/nexmoe.github.io@latest/css/style.css,npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css" crossorigin>
   
-  <!--<link rel="stylesheet" href="/css/style.css?v=1586946050991">-->
+  <!--<link rel="stylesheet" href="/css/style.css?v=1586946050950">-->
 
   
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -121,27 +134,26 @@
   </div>
   <div id="nexmoe-content">
     <div class="nexmoe-primary">
-        <section class="nexmoe-posts">
+        <div class="nexmoe-post">
+  
+      <div class="nexmoe-post-cover" style="padding-bottom: 66.66666666666666%;"> 
+          <img data-src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg" data-sizes="auto" alt="基于ElasticSearch的电子商城搜索功能的实现一" class="lazyload">
+          <h1>基于ElasticSearch的电子商城搜索功能的实现一</h1>
+      </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2020年04月15日</a>
+    <a><i class="nexmoefont icon-areachart"></i>771 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
+</div>
+
+  <div class="nexmoe-post-right">
     
-    <div class="nexmoe-post">
-        <a href="/2020/04/15/%E5%9F%BA%E4%BA%8EElasticSearch%E7%9A%84%E7%94%B5%E5%AD%90%E5%95%86%E5%9F%8E%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%80/">
-            
-                <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: 66.66666666666666%;"> 
-                    <img data-src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg" data-sizes="auto" alt="基于ElasticSearch的电子商城搜索功能的实现一" class="lazyload">
-                    <h1>基于ElasticSearch的电子商城搜索功能的实现一</h1>
-                </div>
-            
-        </a>
+  </div>
 
-        <div class="nexmoe-post-meta nexmoe-rainbow">
-            <a><i class="nexmoefont icon-calendar-fill"></i>2020年04月15日</a>
-            <a><i class="nexmoefont icon-areachart"></i>771 字</a>
-            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
-        </div>
-
-        <article>
-            
-                <h2 id="一、学习目标"><a href="#一、学习目标" class="headerlink" title="一、学习目标"></a>一、学习目标</h2><ul>
+  <article>
+    <h2 id="一、学习目标"><a href="#一、学习目标" class="headerlink" title="一、学习目标"></a>一、学习目标</h2><ul>
 <li><input checked="" disabled="" type="checkbox"> 实现基本的搜索  </li>
 <li><input disabled="" type="checkbox"> 实现页面分页  </li>
 <li><input disabled="" type="checkbox"> 实现结果排序  </li>
@@ -178,75 +190,49 @@
 <hr>
 <p><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200403220454721.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" class="lazyload"></p>
 
-            
-        </article>
-    </div>
+  </article>
+
+  <div class="nexmoe-post-meta nexmoe-rainbow">
     
-    <div class="nexmoe-post">
-        <a href="/2020/04/15/Spring%20Security%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93/">
-            
-                <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: 66.66666666666666%;"> 
-                    <img data-src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg" data-sizes="auto" alt="Spring Security快速入门小结" class="lazyload">
-                    <h1>Spring Security快速入门小结</h1>
-                </div>
-            
-        </a>
-
-        <div class="nexmoe-post-meta nexmoe-rainbow">
-            <a><i class="nexmoefont icon-calendar-fill"></i>2020年04月15日</a>
-            <a><i class="nexmoefont icon-areachart"></i>679 字</a>
-            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
-        </div>
-
-        <article>
-            
-                <p>Spring Security 是 Spring 家族中一个提供安全认证服务的强大框架</p>
-<p>主要提供以下功能</p>
-<ul>
-<li><p>认证</p>
-<pre><code>我们获取用户时可以从mysql、redis、oracle中获取用户的信息、如账户名和密码。交给spring security框架校验</code></pre></li>
-<li><p>授权</p>
-<pre><code>对已校验成功的用户进行授权，服务器的资源只能被有特定权限的用户访问</code></pre></li>
-<li><p>加密/解密</p>
-<pre><code>让敏感信息如密码等，不再以明文方式存储到数据库
-有加密，就有解密。主要用于校验数据</code></pre></li>
-</ul>
-<p>一般比较常用的技术栈组合<br>        SSM+Shiro<br>        Spring Boot/Cloud +Spring Security</p>
-<p>因为spring boot和spring cloud尚未学习到，所以这里用到的是ssm+spring security</p>
-<p>下面是具体使用</p>
-<ul>
-<li>创建web项目，导入以下依赖</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;spring-security-web&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;5.0.1.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;spring-security-config&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;5.0.1.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>配置web.xml</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  &lt;!-- 加载springsecurity配置文件--&gt;</span><br><span class="line">&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">&lt;param-value&gt;classpath:spring-security.xml&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br><span class="line">&lt;listener&gt;</span><br><span class="line">&lt;listener-<span class="class"><span class="keyword">class</span>&gt;<span class="title">org</span>.<span class="title">springframework</span>.<span class="title">web</span>.<span class="title">context</span>.<span class="title">ContextLoaderListener</span>&lt;/<span class="title">listener</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">listener</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">filter</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">filter</span>-<span class="title">name</span>&gt;<span class="title">springSecurityFilterChain</span>&lt;/<span class="title">filter</span>-<span class="title">name</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">filter</span>-<span class="title">class</span>&gt;<span class="title">org</span>.<span class="title">springframework</span>.<span class="title">web</span>.<span class="title">filter</span>.<span class="title">DelegatingFilterProxy</span>&lt;/<span class="title">filter</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">filter</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">filter</span>-<span class="title">mapping</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">filter</span>-<span class="title">name</span>&gt;<span class="title">springSecurityFilterChain</span>&lt;/<span class="title">filter</span>-<span class="title">name</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">url</span>-<span class="title">pattern</span>&gt;/*&lt;/<span class="title">url</span>-<span class="title">pattern</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">filter</span>-<span class="title">mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>注意 springSecurityFilterChain不能改<br>通过阅读源码可知，springsecurity在创建HttpSecurityBeanDefinitionParser类的对象的时候，就已经注册了一个名为springSecurityFilterChain的bean，所以不能任意命名。</p>
-<p>配置spring security.xml</p>
-<p><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200212233405913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="配置springsecurity" class="lazyload"><br><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200212233614303.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="springsecurity配置2" class="lazyload">由于spring security框架的认证<br>是通过UserDetailService来规范的<br>所以必须让自己的UserService来实现此接口</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IUserService</span> <span class="keyword">extends</span> <span class="title">UserDetailsService</span> </span>&#123;</span><br><span class="line">		···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>再通过Service的具体实现类 实现此接口<br>对接口的方法进行重写<br><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200212234713433.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" class="lazyload">UserDetails是一个接口，我们可以认为UserDetails作用是于封装当前进行认证的用户信息，但由于其是一个接口，所以我们可以对其进行实现，也可以使用Spring Security提供的一个UserDetails的实现类User来完成<br>操作</p>
-<p>因为还需要获取到用户的角色，所以这里封装了一个getAuthority方法，来获取用户的角色信息，并一起封装到user信息里。</p>
-<p><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200212235437935.png" alt="在这里插入图片描述" class="lazyload">如果想要对信息进行加密存储，我们需要在spring security中配置加密的bean对象，也可以封装成一个utils方便我们调用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 配置加密类 --&gt;</span><br><span class="line">&lt;bean id=<span class="string">"passwordEncoder"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"</span>/&gt;</span><br></pre></td></tr></table></figure>
-<p>封装成utils：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BCryptPasswordEncoderutils</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> BCryptPasswordEncoder bCryptPasswordEncoder = <span class="keyword">new</span> BCryptPasswordEncoder();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">encrypt</span><span class="params">(String string)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bCryptPasswordEncoder.encode(string);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>IUserDao<br><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200212235739435.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" class="lazyload">最终成果展示：<br><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200213000905136.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" class="lazyload"><br>登录成功后跳转到主页：<br>在这里插入图片描述<br><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200213001043757.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" class="lazyload"></p>
-
-            
-        </article>
-    </div>
     
+</div>
+
+  <div class="nexmoe-post-footer">
+    
+      
+  <div class="nexmoe-post-copyright">
+    <strong>Author：</strong>John Doe<br>
+    <strong>Link：</strong><a href="http://yoursite.com/2020/04/15/%E5%9F%BA%E4%BA%8EElasticSearch%E7%9A%84%E7%94%B5%E5%AD%90%E5%95%86%E5%9F%8E%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%80/" title="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;15&#x2F;%E5%9F%BA%E4%BA%8EElasticSearch%E7%9A%84%E7%94%B5%E5%AD%90%E5%95%86%E5%9F%8E%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%80&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;15&#x2F;%E5%9F%BA%E4%BA%8EElasticSearch%E7%9A%84%E7%94%B5%E5%AD%90%E5%95%86%E5%9F%8E%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%80&#x2F;</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+    
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '80b2453b6d5f37ad6225',
+        clientSecret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb',
+        id: window.location.pathname,
+        repo: 'nexmoe.github.io',
+        owner: 'nexmoe',
+        admin: 'nexmoe'
+    })
+    gitalk.render('gitalk')
+</script>
 </section>
-
+  </div>
+</div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js,gh/nexmoe/nexmoe.github.io@latest/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<!--<script src="/js/app.js?v=1586946050991"></script>-->
+<!--<script src="/js/app.js?v=1586946050953"></script>-->
 
 
     <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
