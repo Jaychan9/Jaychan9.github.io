@@ -4,7 +4,7 @@
 
 <head>
   
-  <title>Hexo</title>
+  <title>Spring Security快速入门小结 - Hexo</title>
   <meta charset="UTF-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
@@ -12,16 +12,28 @@
   
 
   <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Spring Security 是 Spring 家族中一个提供安全认证服务的强大框架 主要提供以下功能  认证 我们获取用户时可以从mysql、redis、oracle中获取用户的信息、如账户名和密码。交给spring security框架校验 授权 对已校验成功的用户进行授权，服务器的资源只能被有特定权限的用户访问 加密&#x2F;解密 让敏感信息如密码等，不再以明文方式存储到数据库 有加密，就有解密。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Security快速入门小结">
+<meta property="og:url" content="http://yoursite.com/2020/04/15/Spring%20Security%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Spring Security 是 Spring 家族中一个提供安全认证服务的强大框架 主要提供以下功能  认证 我们获取用户时可以从mysql、redis、oracle中获取用户的信息、如账户名和密码。交给spring security框架校验 授权 对已校验成功的用户进行授权，服务器的资源只能被有特定权限的用户访问 加密&#x2F;解密 让敏感信息如密码等，不再以明文方式存储到数据库 有加密，就有解密。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200212233405913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200212233614303.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200212234713433.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200212235437935.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200212235739435.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200213000905136.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200213001043757.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-04-15T10:18:22.298Z">
+<meta property="article:modified_time" content="2020-04-15T10:18:07.998Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200212233405913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/nexmoe/nexmoe.github.io@latest/css/style.css,npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css" crossorigin>
   
-  <!--<link rel="stylesheet" href="/css/style.css?v=1586945912909">-->
+  <!--<link rel="stylesheet" href="/css/style.css?v=1586945912884">-->
 
   
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -121,27 +133,26 @@
   </div>
   <div id="nexmoe-content">
     <div class="nexmoe-primary">
-        <section class="nexmoe-posts">
+        <div class="nexmoe-post">
+  
+      <div class="nexmoe-post-cover" style="padding-bottom: 66.66666666666666%;"> 
+          <img data-src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg" data-sizes="auto" alt="Spring Security快速入门小结" class="lazyload">
+          <h1>Spring Security快速入门小结</h1>
+      </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2020年04月15日</a>
+    <a><i class="nexmoefont icon-areachart"></i>679 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
+</div>
+
+  <div class="nexmoe-post-right">
     
-    <div class="nexmoe-post">
-        <a href="/2020/04/15/Spring%20Security%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93/">
-            
-                <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: 66.66666666666666%;"> 
-                    <img data-src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg" data-sizes="auto" alt="Spring Security快速入门小结" class="lazyload">
-                    <h1>Spring Security快速入门小结</h1>
-                </div>
-            
-        </a>
+  </div>
 
-        <div class="nexmoe-post-meta nexmoe-rainbow">
-            <a><i class="nexmoefont icon-calendar-fill"></i>2020年04月15日</a>
-            <a><i class="nexmoefont icon-areachart"></i>679 字</a>
-            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
-        </div>
-
-        <article>
-            
-                <p>Spring Security 是 Spring 家族中一个提供安全认证服务的强大框架</p>
+  <article>
+    <p>Spring Security 是 Spring 家族中一个提供安全认证服务的强大框架</p>
 <p>主要提供以下功能</p>
 <ul>
 <li><p>认证</p>
@@ -177,17 +188,49 @@
 
 <p>IUserDao<br><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200212235739435.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" class="lazyload">最终成果展示：<br><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200213000905136.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" class="lazyload"><br>登录成功后跳转到主页：<br>在这里插入图片描述<br><img data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20200213001043757.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk1MjQxNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" class="lazyload"></p>
 
-            
-        </article>
-    </div>
-    
-</section>
+  </article>
 
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    
+      
+  <div class="nexmoe-post-copyright">
+    <strong>Author：</strong>John Doe<br>
+    <strong>Link：</strong><a href="http://yoursite.com/2020/04/15/Spring%20Security%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93/" title="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;15&#x2F;Spring%20Security%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;15&#x2F;Spring%20Security%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93&#x2F;</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+    
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '80b2453b6d5f37ad6225',
+        clientSecret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb',
+        id: window.location.pathname,
+        repo: 'nexmoe.github.io',
+        owner: 'nexmoe',
+        admin: 'nexmoe'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+  </div>
+</div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js,gh/nexmoe/nexmoe.github.io@latest/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<!--<script src="/js/app.js?v=1586945912910"></script>-->
+<!--<script src="/js/app.js?v=1586945912887"></script>-->
 
 
     <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
